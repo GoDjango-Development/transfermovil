@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Transfermovil Utility
+## What is this
+This is an utility which allows you present information about a receiver, for example a QR image with all transfermovil's needed data, and labels... 
+Also for the sake of the verification allows input from the final user that can be used to identifate him manually later.
+## What this is not
+This is not a payment processor utility, which means this does not allows to process a payment without the transfermovil APK ... Manual intervention is needed if you use this... 
+## How to use
+NOTE: You have an html example in the public folder...
+Once downloaded the release file you must uncompress it and if you are not setting the file under static/ path you must go into each file and exchange each occurrence of static/ with your path for example if the path is static/transfermovil/ you must set each occurrence of static/ to static/transfermovil/ , Last but not least if you want to rename each file you must search inside of each file and rename it inside of it too...
+In the top of your template (no matter if it is blade, blazor or django-templates) you must set.
+```html
+<script defer="defer" src="/static_path/js/main.2f8541c5.js"></script>
+<link href="/static_path/css/main.57e42911.css" rel="stylesheet">
+```
+Previous snippet will give you a design and also the functionalities like on click copy functionality.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Django
+```html
+<div class="transfermovil" bank="{{ cfg.user_bank }}" card="{{ cfg.user_debitcard }}" mobile="{{ cfg.confirmation_number }}" color="red">
+</div>
+```
+You must set also a controller that receives the POST data from frontend.
 
-## Available Scripts
+### Set Up
+* If you want a different design or a different functionality notice that you can override the next elements by its class names or ids:
+QR ClassName = tm-qr
+Top Element ClassName= tm-main
+Labels ClassName = tm-label
+TextArea ClassName = tm-tarea
+TextArea ID = tm_tarea
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* If you wants to add a new input do it as follows:
+```html
+<div class="transfermovil" bank="{{ cfg.user_bank }}" card="{{ cfg.user_debitcard }}" mobile="{{ cfg.confirmation_number }}" color="red">
+  <input id="your_custom_id_here" value="another input"></input>
+  <input type="submit" id="my_submit_button" value="another input"></input>
+</div>
+```
+NOTE: Notice that transfermovil html element is not a form element so you must use js in an input element with type submit or whatever type you like with the submit event on it.. For example:
+```js
+document.getElementByClassName("my_submit_button")[0].onclick = (event)=>{
+  fetch("your_url/here", {
+    method:"POST",
+    body: JSON.stringify({
+      "tfm_message": document.getElementById("tm_tarea").value,
+      "your_other_inputs_ids_here": document.getElementById("your_custom_id_here").value
+    })
+  })
+}
+```
