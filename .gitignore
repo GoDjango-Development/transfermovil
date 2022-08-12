@@ -2,5 +2,4 @@ build/
 dist/
 **.log
 node_modules/
-script.py
 tfm.tar
