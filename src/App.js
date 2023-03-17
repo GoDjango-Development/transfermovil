@@ -11,7 +11,7 @@ class Transfermovil extends React.Component{
     }
     propsToString(){
         let r = "TRANSFERMOVIL_ETECSA, TRANSFERENCIA";
-        r = r.concat("," + this.props["bank"]);
+        //r = r.concat("," + this.props["bank"]);
         r = r.concat("," + this.props["card"]);
         r = r.concat("," + this.props["mobile"]);
         return r;
